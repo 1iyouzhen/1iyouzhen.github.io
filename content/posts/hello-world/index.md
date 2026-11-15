@@ -35,4 +35,4 @@ draft: false
 - 使用[搜索](/search/)查找标题和正文中的关键词。
 - 通过 [RSS](/index.xml) 订阅更新。
 
-这个站点的阅读体验参考了 [Lil’Log](https://lilianweng.github.io/)。博客源码公开在 [GitHub](https://github.com/1iyouzhen/1iyouzhen.github.io)，欢迎交流与勘误。
+博客源码公开在 [GitHub](https://github.com/1iyouzhen/1iyouzhen.github.io)，欢迎交流与勘误。
