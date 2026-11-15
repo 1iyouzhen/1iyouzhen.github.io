@@ -17,3 +17,5 @@ math: false
 ## 细节与验证
 
 ## 参考资料
+
+<!-- 英文版：在同一目录创建 index.en.md，使用相同 slug，翻译 title、summary、tags 和正文。 -->

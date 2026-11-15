@@ -6,6 +6,7 @@
   const button = document.getElementById('check-site-update');
   const status = document.getElementById('site-update-status');
   if (!manifestUrl || !revision || !button || !status) return;
+  const messages = JSON.parse(script.dataset.messages || '{}');
   let checking = false;
   let lastCheck = 0;
   const revisionPattern = /^[a-f0-9]{40}$/;
@@ -25,7 +26,7 @@
     if (!manual && (revision === 'local' || Date.now() - lastCheck < 30000)) return;
     checking = true;
     lastCheck = Date.now();
-    if (manual) { button.disabled = true; setStatus('正在检查…'); }
+    if (manual) { button.disabled = true; setStatus(messages.checking); }
     try {
       const url = new URL(manifestUrl, location.origin);
       url.searchParams.set('_check', Date.now().toString());
@@ -33,7 +34,7 @@
       if (!response.ok) throw new Error('Version check failed');
       const release = await response.json();
       if (!revisionPattern.test(release.revision)) {
-        if (manual) setStatus('本地预览不检查线上版本');
+        if (manual) setStatus(messages.local);
         return;
       }
       const newer = release.revision !== revision && Date.parse(release.builtAt) >= builtAt;
@@ -41,22 +42,22 @@
         const active = document.activeElement;
         const typing = active && (active.matches('input, textarea, [contenteditable="true"]'));
         const selecting = String(window.getSelection() || '').length > 0;
-        if (!manual && (typing || selecting)) { setStatus('有新版本，点击“检查更新”加载'); return; }
+        if (!manual && (typing || selecting)) { setStatus(messages.available); return; }
         const currentUrl = new URL(location.href);
         if (!manual && currentUrl.searchParams.get('_release') === release.revision) {
-          setStatus('新版本正在同步，可稍后点击“检查更新”');
+          setStatus(messages.syncing);
           return;
         }
-        setStatus('发现新版本，正在更新…');
+        setStatus(messages.updating);
         loadRelease(release.revision, manual);
       } else if (manual) {
         // Also refresh the current HTML and search index when the release
         // manifest has reached the edge before another page has propagated.
-        setStatus('正在重新加载最新页面…');
+        setStatus(messages.reloading);
         loadRelease(release.revision, true);
       }
     } catch (error) {
-      if (manual) setStatus('暂时无法检查，请稍后再试');
+      if (manual) setStatus(messages.failed);
     } finally {
       checking = false;
       button.disabled = false;

@@ -1,14 +1,14 @@
 {{- with site.Params.homeInfoParams }}
 <article class="first-entry home-info">
-  <p class="home-eyebrow">YOUZHEN LI <span aria-hidden="true">/</span> RESEARCH &amp; ENGINEERING NOTES</p>
+  <p class="home-eyebrow">YOUZHEN LI <span aria-hidden="true">/</span> {{ i18n "homeEyebrow" }}</p>
   <header class="entry-header"><h1>{{ .Title | markdownify }}</h1></header>
   <section class="entry-content">
     <p class="home-topics">{{ .Content | markdownify }}</p>
-    <p class="home-description">从论文里的一个问题，到代码里的一次验证。<br>这里记录关于大模型与 AI 基础设施的学习、思考和实践。</p>
+    <p class="home-description">{{ i18n "homeDescriptionOne" }}<br>{{ i18n "homeDescriptionTwo" }}</p>
   </section>
   <footer class="entry-footer home-links">
     {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
-    <a class="home-about" href="{{ `about/` | relURL }}">关于这个博客 <span aria-hidden="true">→</span></a>
+    <a class="home-about" href="{{ `about/` | relLangURL }}">{{ i18n "aboutBlog" }} <span aria-hidden="true">→</span></a>
   </footer>
 </article>
 {{- end }}

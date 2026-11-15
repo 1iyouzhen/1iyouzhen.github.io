@@ -112,3 +112,17 @@ git push origin main
 6. 首页按发表日期排序，新建文件不一定排在最上面。需要排在前面的文章，请填写正确的完整日期和时区；不要填写未来时间。
 
 GitHub Pages 的缓存响应可能短暂保留旧版本。本站已增加版本检测、手动更新入口以及搜索索引重新获取，部署仍需要等待 Actions 成功。
+
+## 中英文切换与双语源码
+
+网站导航旁可选择简体中文或 English。中文保留根网址，英文使用 /en/。切换文章会跳转到对应译文；没有已发布译文时进入目标语言首页。
+
+每篇文章可以在同一目录放置 index.md（中文）和 index.en.md（英文）。两个文件保持相同 slug，分别翻译 title、description、summary、tags、categories 和正文；各自用 draft 控制公开。
+
+单文件文章也支持，例如 tset.md 对应 tset.en.md。去掉 .en 后文件名应相同。图片放同一目录，用相对路径共享。英文站内链接使用 /en/ 前缀，例如 /en/archives/。
+
+两份文件是独立维护的源码，修改中文不会自动翻译英文。要同步文章内容，请一起修改两个文件；未完成的译文保留 draft: true。提交到 main 后两种语言一起自动构建，搜索、RSS、标签与归档按语言分别生成。
+
+本地可一次生成双语草稿：python scripts/new_post.py kv-cache-notes --title-zh 中文标题 --title-en EnglishTitle。命令不会覆盖已有目录，生成后分别填写内容再发布。
+
+界面翻译放在 i18n/zh.toml 和 i18n/en.toml；菜单和首页语言配置在 hugo.toml 的 languages.zh / languages.en。英文写作说明见 WRITING.en.md。

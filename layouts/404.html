@@ -1,0 +1,8 @@
+{{- define "main" }}
+<section class="page-not-found">
+  <p class="error-code">404</p>
+  <h1>{{ i18n "notFoundTitle" }}</h1>
+  <p>{{ i18n "notFoundText" }}</p>
+  <a href="{{ site.Home.RelPermalink }}">{{ i18n "returnHome" }}</a>
+</section>
+{{- end }}

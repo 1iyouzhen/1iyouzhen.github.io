@@ -1,0 +1,52 @@
+[homeEyebrow]
+other = '研究与工程笔记'
+[homeDescriptionOne]
+other = '从论文里的一个问题，到代码里的一次验证。'
+[homeDescriptionTwo]
+other = '这里记录关于大模型与 AI 基础设施的学习、思考和实践。'
+[aboutBlog]
+other = '关于这个博客'
+[languageSwitch]
+other = '切换语言'
+[themeToggle]
+other = '切换明暗主题'
+[versionLabel]
+other = '版本'
+[versionTitle]
+other = '当前页面对应的源码提交'
+[checkUpdates]
+other = '检查更新'
+[checkingUpdates]
+other = '正在检查…'
+[localPreview]
+other = '本地预览不检查线上版本'
+[newVersionAvailable]
+other = '有新版本，点击“检查更新”加载'
+[versionPropagating]
+other = '新版本正在同步，可稍后点击“检查更新”'
+[loadingNewVersion]
+other = '发现新版本，正在更新…'
+[reloadingPage]
+other = '正在重新加载最新页面…'
+[updateCheckFailed]
+other = '暂时无法检查，请稍后再试'
+[poweredBy]
+other = '技术支持：'
+[backToTop]
+other = '回到顶部'
+[searchLabel]
+other = '搜索文章'
+[searchResults]
+other = '搜索结果'
+[postsTitle]
+other = '文章'
+[tagsTitle]
+other = '标签'
+[categoriesTitle]
+other = '分类'
+[notFoundTitle]
+other = '页面未找到'
+[notFoundText]
+other = '这个页面不存在，或文章地址已经改变。'
+[returnHome]
+other = '返回首页'

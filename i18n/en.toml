@@ -1,0 +1,52 @@
+[homeEyebrow]
+other = 'RESEARCH & ENGINEERING NOTES'
+[homeDescriptionOne]
+other = 'From a question in a paper to a check in code.'
+[homeDescriptionTwo]
+other = 'Notes on learning, thinking, and building with LLMs and AI infrastructure.'
+[aboutBlog]
+other = 'About this blog'
+[languageSwitch]
+other = 'Switch language'
+[themeToggle]
+other = 'Toggle color theme'
+[versionLabel]
+other = 'Version'
+[versionTitle]
+other = 'Source commit for this page'
+[checkUpdates]
+other = 'Check for updates'
+[checkingUpdates]
+other = 'Checking…'
+[localPreview]
+other = 'Local preview does not check for live releases'
+[newVersionAvailable]
+other = 'An update is available. Select “Check for updates” to load it.'
+[versionPropagating]
+other = 'The new version is syncing. Try “Check for updates” shortly.'
+[loadingNewVersion]
+other = 'New version found. Updating…'
+[reloadingPage]
+other = 'Reloading the latest page…'
+[updateCheckFailed]
+other = 'Unable to check right now. Please try again later.'
+[poweredBy]
+other = 'Powered by'
+[backToTop]
+other = 'Back to top'
+[searchLabel]
+other = 'Search articles'
+[searchResults]
+other = 'Search results'
+[postsTitle]
+other = 'Posts'
+[tagsTitle]
+other = 'Tags'
+[categoriesTitle]
+other = 'Categories'
+[notFoundTitle]
+other = 'Page not found'
+[notFoundText]
+other = 'This page does not exist, or the article address has changed.'
+[returnHome]
+other = 'Return home'

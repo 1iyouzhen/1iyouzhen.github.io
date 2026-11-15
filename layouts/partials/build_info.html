@@ -1,2 +1,2 @@
 {{- $revision := os.Getenv "HUGO_DEPLOY_COMMIT" | default "local" -}}
-{{- return (dict "revision" $revision "builtAt" (now.UTC.Format "2006-01-02T15:04:05Z")) -}}
+{{- return (dict "revision" $revision "builtAt" (now.UTC.Format "2006-01-02T15:04:05Z") "languages" (slice "zh" "en")) -}}

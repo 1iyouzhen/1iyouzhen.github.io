@@ -21,3 +21,12 @@ Windows 可运行 `./scripts/bootstrap.ps1` 安装固定版 Hugo，然后运行 
 - themes/PaperMod/：固定版本 MIT 许可主题
 - .github/workflows/publish.yml：main 提交后自动构建与发布
 - scripts/：构建、校验与可选的本地发布脚本
+
+## 双语站点 / Bilingual site
+
+- 简体中文：https://1iyouzhen.github.io/
+- English：https://1iyouzhen.github.io/en/
+- 中文写作说明：[WRITING.md](WRITING.md)
+- English authoring guide: [WRITING.en.md](WRITING.en.md)
+- index.md 与 index.en.md 分别保存中英文文章；提交 main 后同时自动发布。
+- scripts/new_post.py 可一次生成两个语言的文章草稿。
