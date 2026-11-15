@@ -1,4 +1,4 @@
 ---
 aliases: ["/en/"]
-title: "Youzhen's Notes"
+title: "Notes"
 ---

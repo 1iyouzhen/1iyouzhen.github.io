@@ -1,3 +1,3 @@
 ---
-title: "Youzhen's Notes"
+title: "Notes"
 ---

@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 SOURCE = Path(__file__).resolve().parent.parent
 ROOT = (SOURCE / (sys.argv[1] if len(sys.argv) > 1 else 'public')).resolve()
 BASE = '1iyouzhen.github.io'
-REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll', 'deployment.json']
+REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll', 'deployment.json', 'content-manifest.json']
 
 class Page(HTMLParser):
     def __init__(self):
@@ -90,6 +90,13 @@ expected = os.environ.get('HUGO_DEPLOY_COMMIT')
 if expected: assert release.get('revision') == expected, 'Wrong build revision'
 assert release.get('languages') == ['zh', 'en'], 'Bilingual deployment manifest missing'
 assert release.get('defaultLanguage') == 'en', 'English must be the default language'
+from content_manifest import inspect
+content_manifest = json.loads((ROOT / 'content-manifest.json').read_text(encoding='utf-8'))
+assert content_manifest['revision'] == release['revision'], 'Content manifest revision mismatch'
+for route, output in content_manifest['pages'].items():
+    path = ROOT / route.lstrip('/')
+    if path.is_dir(): path = path / 'index.html'
+    assert inspect(path.read_text(encoding='utf-8')).digest == output['sha256'], 'Content fingerprint mismatch: ' + route
 ET.parse(ROOT / 'index.xml'); ET.parse(ROOT / 'sitemap.xml')
 assert len(errors) == 0, chr(10).join(errors)
 print(f'PASS: {len(cache)} HTML pages, {len(index)} search entries, both languages, required routes, internal links, RSS, sitemap and draft isolation.')

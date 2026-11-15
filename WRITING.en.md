@@ -75,3 +75,12 @@ README.md describes the GitHub repository; it is not a website page. Do not edit
 Check Actions → Publish blog for progress. The footer shows the current revision and provides Check for updates. Open pages also check for newer releases. A page cached before this interface update may need one hard refresh with Ctrl+Shift+R.
 
 Set math: true for mathematical expressions. Syntax highlighting, article contents, and code copying are supported in both editions.
+
+
+## Source-to-website content verification
+
+The site name is Notes, matching your earlier repository title change. The actual site title is configured in hugo.toml and the two language home metadata files, content/_index.en.md and content/_index.zh.md. README is a repository description rather than a rendered blog page.
+
+The obsolete docs snapshot has been removed from the tracked repository. Edit Markdown under content/, not generated HTML.
+
+Automatic deployment now verifies exact rendered content, including titles, text, navigation, links, both search indexes, and both RSS feeds. A matching commit label alone is no longer sufficient for a successful content check. English and Chinese Markdown translations remain independent editable source documents.

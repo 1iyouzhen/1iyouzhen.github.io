@@ -53,7 +53,10 @@ jobs:
         run: hugo --gc --minify --destination public --baseURL '${{ steps.pages.outputs.base_url }}/'
 
       - name: Validate generated site
-        run: python3 scripts/check_site.py public
+        run: |
+          python3 scripts/test_content_manifest.py
+          python3 scripts/content_manifest.py public
+          python3 scripts/check_site.py public
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
@@ -75,5 +78,5 @@ jobs:
       - name: Checkout deployment verification
         uses: actions/checkout@v4
 
-      - name: Verify live release and article pages
+      - name: Verify exact live content, search, and RSS
         run: python3 scripts/verify_deployment.py '${{ steps.deployment.outputs.page_url }}' '${{ github.sha }}'

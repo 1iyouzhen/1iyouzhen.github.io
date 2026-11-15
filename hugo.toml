@@ -1,5 +1,5 @@
 baseURL = 'https://1iyouzhen.github.io/'
-title = "Youzhen's Notes"
+title = "Notes"
 theme = 'PaperMod'
 locale = 'en-US'
 defaultContentLanguage = 'en'
@@ -56,7 +56,7 @@ theme_color = '#f8f9fc'
 msapplication_TileColor = '#3156a4'
 
 [params.label]
-text = "Youzhen's Notes"
+text = "Notes"
 
 [params.homeInfoParams]
 Title = '把问题想清楚，把过程记下来。'
