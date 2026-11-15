@@ -2,9 +2,10 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 import json
+import sys
 import xml.etree.ElementTree as ET
 
-ROOT = Path(__file__).resolve().parent.parent / 'docs'
+ROOT = (Path(__file__).resolve().parent.parent / (sys.argv[1] if len(sys.argv) > 1 else 'public')).resolve()
 BASE = '1iyouzhen.github.io'
 REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'posts/hello-world/index.html', 'posts/learning-map/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll']
 class Page(HTMLParser):

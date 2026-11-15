@@ -1,58 +1,102 @@
-# 写作与维护
+# 添加文章与自动发布
 
-## 发布新文章
+## 最简单：直接在 GitHub 网页写
 
-在 `content/posts/<文章英文短名>/index.md` 新建 Markdown 文件：
+1. 打开仓库 https://github.com/1iyouzhen/1iyouzhen.github.io ，进入 `content/posts`。
+2. 选择 **Add file → Create new file**。文件名填写 `my-first-post/index.md`，每篇文章换一个英文目录名。
+3. 粘贴下方模板，将标题、日期、摘要、标签、正文改成自己的内容。日期请填写当前或过去的时间。
+4. 点击 **Commit changes**，选择直接提交到 **main**。
+5. 在仓库 **Actions → Publish blog** 查看进度。绿色成功后打开 https://1iyouzhen.github.io/ 。
 
-```yaml
+每次新增、修改或删除文章并提交到 main，GitHub Actions 都会自动构建并发布。无需本地安装 Hugo，也无需手工更新 HTML。修改草稿同样会触发构建，但草稿不会出现在网站上。
+
+## 文章模板
+
+新建文件路径示例：`content/posts/my-first-post/index.md`。
+
+```markdown
 ---
-title: 文章标题
-date: 2026-11-15T12:00:00+08:00
-slug: my-new-post
-description: 一句话介绍
-summary: 首页显示的摘要
+title: "我的第一篇文章"
+date: 2026-11-15T08:00:00+08:00
+slug: my-first-post
+description: "文章的一句话介绍"
+summary: "这是首页和搜索结果中显示的文章摘要。"
 tags: [LLM, 学习笔记]
 draft: false
 math: false
 ---
+
+这里是文章开头。
+
+## 第一个小节
+
+这里写正文，可以使用 **加粗**、列表、链接和代码块。
+
+## 参考资料
+
+- [参考链接](https://example.com/)
 ```
 
-正文写在第二个 `---` 后面。图片放在同一目录，使用 `![说明](figure.png)` 引用。不要把整篇正文嵌进配置文件。
+- `title`：网页上显示的标题，可使用中文。
+- `date`：发表时间。请填真实时间；未来日期默认不发布，也不会在时间到达时定时上线，需要再次提交或手动运行 Actions。
+- `slug`：文章网址的英文短名，全站唯一。例如 `my-first-post` 对应 `/posts/my-first-post/`。
+- `summary`：首页摘要。
+- `tags`：自动生成标签页，无需手工维护。
+- `draft: false`：公开发布；写作中改为 `true`，网站会自动隐藏它。
+- `math: true`：启用数学公式，按需加载 MathJax。
 
-修改 Markdown 后，运行 `./scripts/publish.ps1`，脚本会构建、校验、提交并推送源码与静态站点。GitHub Pages 会自动发布 `docs/` 中的产物。若在 GitHub 网页编辑文章，需在本地拉取改动后运行发布脚本。
+## 修改或删除文章
 
-## 本地预览
+在 GitHub 打开文章 `index.md`，点铅笔编辑，再点 **Commit changes**。删除文章目录中的 Markdown 并提交，会自动从站点、归档、标签、搜索和 RSS 中移除该文章。
 
-安装 Hugo Extended 0.170.0（也可运行 Windows 脚本 `./scripts/bootstrap.ps1`）。主题已随仓库保存，无需克隆子模块。
+**每次点击提交到 main，都会触发一次自动更新。** 如果提交到其他分支，请将 Pull Request 合并到 main 后再查看网站。
+
+## 加图片
+
+先创建文章，再进入这篇文章的目录，用 **Add file → Upload files** 上传图片，例如 `figure.png`。文章里写：
+
+```markdown
+![图片说明](figure.png)
+```
+
+图片与文章放在同一个目录；注意文件名大小写。
+
+## 本地写作（可选）
+
+本地项目：`C:/Users/l1337/youzhen-blog`。本地预览需要 Hugo Extended 0.170.0，Windows 可运行 `./scripts/bootstrap.ps1` 安装。
 
 ```powershell
+# 先同步网页上的更新
+git pull --ff-only
+# 预览，包括草稿
 .\.tools\hugo.exe server -D
 ```
 
-打开终端给出的本地地址。`-D` 只用于本地查看草稿；生产构建不会发布 `draft: true` 的内容。
+完成后，只需提交 Markdown：
 
 ```powershell
-.\.tools\hugo.exe new content posts/my-new-post/index.md
+git add content
+git commit -m "docs: add new article"
+git push origin main
 ```
 
-## 公式、代码和目录
+也可运行 `./scripts/publish.ps1`，会先在本地构建、校验并提交源文件；推送后由 GitHub 自动部署。
 
-文章设置 `math: true` 即按需加载固定版本 MathJax 3.2.2。行内公式用 `$...$`，独立公式用 `$$...$$`；公式显示需要读者能访问 jsDelivr。普通页面不依赖外部字体或 JavaScript CDN。代码块在三个反引号后写语言，例如 `python`。二、三级标题自动生成文章目录。
+## 发布进度与失败排查
 
-## 配置入口
+进入仓库 **Actions → Publish blog** 查看最近一次运行。绿色表示成功；红色表示失败，点进去查看具体步骤。失败时已上线的网站保持上次成功版本。
+
+常见原因：Markdown 开头少了 `---`、标题中的冒号没有加引号、图片文件名错误、两个文章使用相同 slug，或手工修改后产生无效链接。修复并重新提交即可。
+
+构建会自动检查必要页面、内部链接、RSS、搜索索引和草稿隔离。`public/` 是临时生成目录，不提交到仓库。GitHub Pages 的 Source 使用 **GitHub Actions**。不需要提交 `docs/` 或生成 HTML。
+
+## 配置与样式
 
 - `hugo.toml`：站点名称、导航、社交链接、简介。
 - `content/about.md`：关于页面。
 - `content/projects.md`：项目页面。
 - `assets/css/extended/custom.css`：个性化样式。
-- `versions.json`：固定的 Hugo 版本和 PaperMod 源码版本。
+- `.github/workflows/publish.yml`：自动构建与发布。
+- `versions.json`：固定的 Hugo 与主题版本。
 
-## 构建与部署
-
-运行 `./scripts/build.ps1` 或 `npm run build` 构建；运行 `npm run check` 检查页面、链接与草稿隔离。
-
-`docs/` 是实际发布产物，由 Hugo 生成。GitHub Pages 从 `main` 分支的 `/docs` 目录发布。首次发布的静态文件随源码提交，后续通过 `scripts/publish.ps1` 更新。不要手动编辑 `docs/`。
-
-主题来自 MIT 许可的 PaperMod，保留在 `themes/PaperMod/LICENSE`。文章内容版权归各自作者所有，引用资料以其原始许可为准。
-
-发布脚本会先检查工作区状态；请先提交或暂存无关的改动，保持 main 分支且不混入其他文件。站点中英文介绍可按需要自行修改。
+主题来自 MIT 许可的 PaperMod，保留原始 LICENSE。文章版权归各自作者所有。
