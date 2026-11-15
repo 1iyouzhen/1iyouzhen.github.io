@@ -1,4 +1,4 @@
-# Youzhen’s Notes
+# Notes
 
 Youzhen Li 的个人博客，记录 LLMs 与 AI Infrastructure 的学习笔记、论文阅读和工程实践。
 
@@ -6,10 +6,6 @@ Youzhen Li 的个人博客，记录 LLMs 与 AI Infrastructure 的学习笔记�
 - **写文章：[添加文章与自动发布](WRITING.md)**
 - 直接在 GitHub 的 `content/posts/` 下新建 `<文章英文名>/index.md`，提交到 main 后自动发布。
 - 修改文章、图片、导航或样式，同样提交到 main 即自动更新。
-
-## 技术栈
-
-Hugo Extended 0.170.0 + PaperMod，GitHub Actions 自动构建，GitHub Pages 托管。
 
 ## 本地预览
 
@@ -25,5 +21,3 @@ Windows 可运行 `./scripts/bootstrap.ps1` 安装固定版 Hugo，然后运行 
 - themes/PaperMod/：固定版本 MIT 许可主题
 - .github/workflows/publish.yml：main 提交后自动构建与发布
 - scripts/：构建、校验与可选的本地发布脚本
-
-阅读体验参考 Lilian Weng 的 Lil’Log，内容独立维护。文章版权归作者所有，第三方代码遵守各自许可证。
