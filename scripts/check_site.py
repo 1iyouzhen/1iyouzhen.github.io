@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 SOURCE = Path(__file__).resolve().parent.parent
 ROOT = (SOURCE / (sys.argv[1] if len(sys.argv) > 1 else 'public')).resolve()
 BASE = '1iyouzhen.github.io'
-REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll']
+REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll', 'deployment.json']
 
 class Page(HTMLParser):
     def __init__(self):
@@ -77,6 +77,9 @@ for row in all_pages:
     relative = unquote(urlsplit(row['permalink']).path).lstrip('/')
     if (ROOT / relative / 'index.html').exists(): errors.append('Unpublished article leaked into site: ' + row['path'])
     if row['permalink'] in search_urls: errors.append('Unpublished article leaked into search: ' + row['path'])
+release = json.loads((ROOT / 'deployment.json').read_text(encoding='utf-8'))
+expected = os.environ.get('HUGO_DEPLOY_COMMIT')
+if expected: assert release.get('revision') == expected, 'Wrong build revision'
 ET.parse(ROOT / 'index.xml'); ET.parse(ROOT / 'sitemap.xml')
 assert len(errors) == 0, chr(10).join(errors)
 print(f'PASS: {len(cache)} HTML pages, {len(index)} search entries, required routes, internal links, RSS, sitemap and draft isolation.')

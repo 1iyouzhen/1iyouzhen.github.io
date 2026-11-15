@@ -100,3 +100,15 @@ git push origin main
 - `versions.json`：固定的 Hugo 与主题版本。
 
 主题来自 MIT 许可的 PaperMod，保留原始 LICENSE。文章版权归各自作者所有。
+
+
+## 已提交，但网页看起来没变化？
+
+1. 先看 Actions → Publish blog 是否绿色成功；现在部署后还会检查线上页面的提交版本。
+2. 查看网站页脚的版本号，并与 GitHub 最新提交前七位比较。点页脚“检查更新”可以重新加载最新页面。已经打开的页面也会定期检查新版本。
+3. 首次安装更新检测以前缓存的旧页面，需要按一次 Ctrl+Shift+R 强制刷新；之后页面会自动检测后续版本。
+4. 仓库 README.md 是 GitHub 仓库介绍，不会直接显示在博客正文中。博客文章请修改 content/posts/ 下的 Markdown，网站名称请修改 hugo.toml 中的 title 和 params.label.text。
+5. 文章网址由 slug 决定。例如文件 content/posts/tset.md 中写了 slug: my-first-post，网址就是 /posts/my-first-post/。
+6. 首页按发表日期排序，新建文件不一定排在最上面。需要排在前面的文章，请填写正确的完整日期和时区；不要填写未来时间。
+
+GitHub Pages 的缓存响应可能短暂保留旧版本。本站已增加版本检测、手动更新入口以及搜索索引重新获取，部署仍需要等待 Actions 成功。

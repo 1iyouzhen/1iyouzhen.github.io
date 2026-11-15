@@ -1,0 +1,12 @@
+{{- $build := partialCached "build_info.html" site -}}
+{{- $manifest := resources.FromString "deployment.json" ($build | jsonify) -}}
+<div class="site-update-controls">
+  {{- if ne $build.revision "local" }}
+  <a href="https://github.com/1iyouzhen/1iyouzhen.github.io/commit/{{ $build.revision }}" title="当前页面对应的源码提交">版本 {{ substr $build.revision 0 7 }}</a>
+  {{- end }}
+  <button type="button" id="check-site-update">检查更新</button>
+  <span id="site-update-status" role="status" aria-live="polite"></span>
+</div>
+{{- with resources.Get "js/site-updates.js" | minify | fingerprint }}
+<script defer src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" data-deployment-url="{{ $manifest.RelPermalink }}"></script>
+{{- end }}

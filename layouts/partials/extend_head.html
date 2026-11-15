@@ -1,3 +1,6 @@
+{{- $build := partialCached "build_info.html" site -}}
+<meta name="blog-revision" content="{{ $build.revision }}">
+<meta name="blog-built-at" content="{{ $build.builtAt }}">
 <meta name="color-scheme" content="light dark">
 {{- if .Params.math }}
 <script>
