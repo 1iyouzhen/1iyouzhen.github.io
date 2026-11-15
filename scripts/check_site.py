@@ -1,23 +1,31 @@
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
+import csv
+import io
 import json
+import os
+import shutil
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 
-ROOT = (Path(__file__).resolve().parent.parent / (sys.argv[1] if len(sys.argv) > 1 else 'public')).resolve()
+SOURCE = Path(__file__).resolve().parent.parent
+ROOT = (SOURCE / (sys.argv[1] if len(sys.argv) > 1 else 'public')).resolve()
 BASE = '1iyouzhen.github.io'
-REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'posts/hello-world/index.html', 'posts/learning-map/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll']
+REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll']
+
 class Page(HTMLParser):
     def __init__(self):
-        super().__init__(); self.refs = []; self.ids = set(); self.title = False; self.in_title = False; self.canonical = False
+        super().__init__()
+        self.refs = []; self.ids = set(); self.title = False; self.in_title = False; self.canonical = False
     def handle_starttag(self, tag, attrs):
-        a = dict(attrs)
-        if 'id' in a: self.ids.add(a['id'])
+        attrs = dict(attrs)
+        if 'id' in attrs: self.ids.add(attrs['id'])
         if tag == 'title': self.in_title = True
-        if tag == 'link' and a.get('rel') == 'canonical': self.canonical = True
-        for k in ('href', 'src'):
-            if k in a: self.refs.append(a[k])
+        if tag == 'link' and attrs.get('rel') == 'canonical': self.canonical = True
+        for key in ('href', 'src'):
+            if key in attrs: self.refs.append(attrs[key])
     def handle_endtag(self, tag):
         if tag == 'title': self.in_title = False
     def handle_data(self, data):
@@ -28,9 +36,9 @@ for path in REQUIRED:
     if not (ROOT / path).is_file(): errors.append('Missing required file: ' + path)
 cache = {}
 for path in ROOT.rglob('*.html'):
-    p = Page(); p.feed(path.read_text(encoding='utf-8')); cache[path.resolve()] = p
-    if not p.title: errors.append('Missing title: ' + str(path))
-    if path.name != '404.html' and not p.canonical: errors.append('Missing canonical: ' + str(path))
+    page = Page(); page.feed(path.read_text(encoding='utf-8')); cache[path.resolve()] = page
+    if not page.title: errors.append('Missing title: ' + str(path))
+    if path.name != '404.html' and not page.canonical: errors.append('Missing canonical: ' + str(path))
 for path, page in cache.items():
     for ref in page.refs:
         url = urlsplit(ref)
@@ -45,11 +53,30 @@ for path, page in cache.items():
         elif url.fragment and target.suffix == '.html':
             dest = cache.get(target)
             if dest and unquote(url.fragment) not in dest.ids: errors.append(f'Broken anchor in {path.relative_to(ROOT)}: {ref}')
+
 index = json.loads((ROOT / 'index.json').read_text(encoding='utf-8'))
-assert any('开始记录' in row['title'] for row in index), 'Welcome post missing from search index'
-assert any('学习导航' in row['title'] for row in index), 'Learning map missing from search index'
-assert not any('inference-notes' in row.get('permalink', '') for row in index), 'Draft leaked into search'
-assert not (ROOT / 'posts/inference-notes').exists(), 'Draft leaked into production'
+local_hugo = SOURCE / '.tools/hugo.exe'
+hugo = os.environ.get('HUGO_EXE') or shutil.which('hugo') or (str(local_hugo) if local_hugo.is_file() else None)
+assert hugo, 'Hugo executable is required for publication validation'
+def manifest(kind):
+    result = subprocess.run([hugo, 'list', kind], cwd=SOURCE, check=True, capture_output=True, encoding='utf-8-sig')
+    return list(csv.DictReader(io.StringIO(result.stdout)))
+all_pages = [row for row in manifest('all') if row['kind'] == 'page']
+published = [row for row in manifest('published') if row['kind'] == 'page']
+urls = [row['permalink'] for row in all_pages]
+assert len(urls) == len(set(urls)), 'Duplicate article URLs: assign each article a unique slug'
+published_urls = {row['permalink'] for row in published}
+search_urls = {row['permalink'] for row in index}
+for row in published:
+    if row['section'] != 'posts': continue
+    relative = unquote(urlsplit(row['permalink']).path).lstrip('/')
+    if not (ROOT / relative / 'index.html').is_file(): errors.append('Published article missing: ' + row['path'])
+    if row['permalink'] not in search_urls: errors.append('Published article missing from search: ' + row['path'])
+for row in all_pages:
+    if row['permalink'] in published_urls: continue
+    relative = unquote(urlsplit(row['permalink']).path).lstrip('/')
+    if (ROOT / relative / 'index.html').exists(): errors.append('Unpublished article leaked into site: ' + row['path'])
+    if row['permalink'] in search_urls: errors.append('Unpublished article leaked into search: ' + row['path'])
 ET.parse(ROOT / 'index.xml'); ET.parse(ROOT / 'sitemap.xml')
-assert len(errors) == 0, '\n'.join(errors)
+assert len(errors) == 0, chr(10).join(errors)
 print(f'PASS: {len(cache)} HTML pages, {len(index)} search entries, required routes, internal links, RSS, sitemap and draft isolation.')
