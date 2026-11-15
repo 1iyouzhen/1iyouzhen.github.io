@@ -1,7 +1,7 @@
 ---
 title: 关于
 description: Youzhen Li · LLMs & AI Infrastructure
-url: /about/
+slug: about
 ShowToc: false
 ShowReadingTime: false
 ShowWordCount: false

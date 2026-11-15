@@ -54,14 +54,14 @@ for path, page in cache.items():
             dest = cache.get(target)
             if dest and unquote(url.fragment) not in dest.ids: errors.append(f'Broken anchor in {path.relative_to(ROOT)}: {ref}')
 
-indexes = {prefix: json.loads((ROOT / prefix / 'index.json').read_text(encoding='utf-8')) for prefix in ('', 'en')}
+indexes = {prefix: json.loads((ROOT / prefix / 'index.json').read_text(encoding='utf-8')) for prefix in ('', 'zh')}
 index = [entry for entries in indexes.values() for entry in entries]
-for prefix in ('', 'en'):
+for prefix in ('', 'zh'):
     for route in ('index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', '404.html'):
         if not (ROOT / prefix / route).is_file(): errors.append('Missing bilingual route: ' + prefix + '/' + route)
     for entry in indexes[prefix]:
         path = urlsplit(entry['permalink']).path
-        if path.startswith('/en/') != (prefix == 'en'): errors.append('Language leaked into search index: ' + entry['permalink'])
+        if path.startswith('/zh/') != (prefix == 'zh'): errors.append('Language leaked into search index: ' + entry['permalink'])
     ET.parse(ROOT / prefix / 'index.xml')
 local_hugo = SOURCE / '.tools/hugo.exe'
 hugo = os.environ.get('HUGO_EXE') or shutil.which('hugo') or (str(local_hugo) if local_hugo.is_file() else None)
@@ -89,6 +89,7 @@ release = json.loads((ROOT / 'deployment.json').read_text(encoding='utf-8'))
 expected = os.environ.get('HUGO_DEPLOY_COMMIT')
 if expected: assert release.get('revision') == expected, 'Wrong build revision'
 assert release.get('languages') == ['zh', 'en'], 'Bilingual deployment manifest missing'
+assert release.get('defaultLanguage') == 'en', 'English must be the default language'
 ET.parse(ROOT / 'index.xml'); ET.parse(ROOT / 'sitemap.xml')
 assert len(errors) == 0, chr(10).join(errors)
 print(f'PASS: {len(cache)} HTML pages, {len(index)} search entries, both languages, required routes, internal links, RSS, sitemap and draft isolation.')

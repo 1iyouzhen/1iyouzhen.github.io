@@ -30,9 +30,9 @@ draft: false
 
 ## 如何浏览
 
-- 在[归档](/archives/)中按时间查找文章。
-- 在[标签](/tags/)中按主题浏览。
-- 使用[搜索](/search/)查找标题和正文中的关键词。
-- 通过 [RSS](/index.xml) 订阅更新。
+- 在[归档](/zh/archives/)中按时间查找文章。
+- 在[标签](/zh/tags/)中按主题浏览。
+- 使用[搜索](/zh/search/)查找标题和正文中的关键词。
+- 通过 [RSS](/zh/index.xml) 订阅更新。
 
 博客源码公开在 [GitHub](https://github.com/1iyouzhen/1iyouzhen.github.io)，欢迎交流与勘误。

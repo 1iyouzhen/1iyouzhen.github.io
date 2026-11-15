@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/projects/"]
 title: Learning Projects
 description: Connecting papers, models, and practical problems through code.
 slug: projects

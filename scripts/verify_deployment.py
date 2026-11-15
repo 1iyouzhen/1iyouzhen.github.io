@@ -29,8 +29,9 @@ def verify(base, expected):
             manifest = json.loads(fetch('deployment.json'))
             assert manifest['revision'] == expected, 'Version manifest has not reached the expected commit'
             assert manifest.get('languages') == ['zh', 'en'], 'Bilingual release manifest missing'
-            pages = json.loads(fetch('index.json')) + json.loads(fetch('en/index.json'))
-            routes = ['', 'archives/', 'search/', 'tags/', 'en/', 'en/archives/', 'en/search/', 'en/tags/']
+            assert manifest.get('defaultLanguage') == 'en', 'English default language missing'
+            pages = json.loads(fetch('index.json')) + json.loads(fetch('zh/index.json'))
+            routes = ['', 'archives/', 'search/', 'tags/', 'zh/', 'zh/archives/', 'zh/search/', 'zh/tags/']
             routes.extend(urlsplit(row['permalink']).path.lstrip('/') for row in pages)
             routes = list(dict.fromkeys(routes))
             def check_page(route):

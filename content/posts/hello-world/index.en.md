@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/posts/hello-world/"]
 title: "Getting Started: Youzhen’s Notes"
 date: 2026-11-15T08:00:00+08:00
 slug: hello-world
@@ -30,9 +31,9 @@ Future technical notes will aim to answer a few concrete questions:
 
 ## Finding your way around
 
-- Browse articles by date in the [archive](/en/archives/).
-- Explore topics through [tags](/en/tags/).
-- Use [search](/en/search/) to find keywords in titles and content.
-- Subscribe through [RSS](/en/index.xml).
+- Browse articles by date in the [archive](/archives/).
+- Explore topics through [tags](/tags/).
+- Use [search](/search/) to find keywords in titles and content.
+- Subscribe through [RSS](/index.xml).
 
 The source is available on [GitHub](https://github.com/1iyouzhen/1iyouzhen.github.io). Feedback and corrections are welcome.

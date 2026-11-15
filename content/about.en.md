@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/about/"]
 title: About
 description: Youzhen Li · LLMs & AI Infrastructure
 slug: about

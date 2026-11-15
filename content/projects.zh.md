@@ -1,7 +1,7 @@
 ---
 title: 学习项目
 description: 从代码出发，连接论文、模型与真实问题。
-url: /projects/
+slug: projects
 ShowToc: false
 ShowReadingTime: false
 ShowWordCount: false
@@ -19,4 +19,3 @@ ShowWordCount: false
 | 语言模型基础 | [Stanford CS336](https://github.com/stanford-cs336/assignment1-basics) |
 | LLM 推理系统 | [sgl-project/mini-sglang](https://github.com/sgl-project/mini-sglang) |
 | LLM 推理服务 | [sgl-project/sglang](https://github.com/sgl-project/sglang) |
-

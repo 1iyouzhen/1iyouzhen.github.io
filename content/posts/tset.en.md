@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/posts/my-first-post/"]
 title: "My First Article"
 date: 2026-11-15
 slug: my-first-post

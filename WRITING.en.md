@@ -1,22 +1,35 @@
 # Writing and Publishing
 
-The blog has two editions: Simplified Chinese at `https://1iyouzhen.github.io/` and English at `https://1iyouzhen.github.io/en/`. Use the language switch beside the site title to open the matching translation. If a translation is not published, the switch opens the destination language’s home page. Search, RSS, archives, and tags are independent for each language.
+English is the default edition at https://1iyouzhen.github.io/ . Simplified Chinese is available at https://1iyouzhen.github.io/zh/ . The former /en/ addresses redirect to their English counterparts at the root.
+
+The language button shows the current language. Click it to reveal English and 简体中文, then choose a language. Article pages switch to the matching translation. When no published translation exists, the switch opens the destination language home page.
 
 ## Add an article on GitHub
 
-1. Open `content/posts` in the repository and select **Add file → Create new file**.
-2. Name the Chinese file `my-article/index.md`, or the English file `my-article/index.en.md`.
-3. Paste the template below and write the article after the closing `---`.
-4. Set `draft: false` when ready and commit to `main`.
-5. Wait for **Actions → Publish blog** to finish. It builds, validates, publishes, and checks the live pages for both languages.
+Open content/posts in the repository, select Add file → Create new file, and use a unique article directory:
+
+```text
+content/posts/my-article/
+  index.en.md    # English, the default edition
+  index.zh.md    # Simplified Chinese
+  figure.png     # Shared image
+```
+
+Keep the same slug in both versions. Translate the title, description, summary, tags, categories, and body. Each language has an independent draft flag. Translations are maintained as source Markdown; editing one version does not automatically translate the other.
+
+Explicit .en.md and .zh.md suffixes are recommended. A file without a language suffix, such as index.md, belongs to the default English edition. Standalone files such as my-article.en.md and my-article.zh.md also work.
+
+## Article template
+
+Save the English version as content/posts/my-article/index.en.md:
 
 ```markdown
 ---
-title: "My Article"
+title: My Article
 date: 2026-11-15T08:00:00+08:00
 slug: my-article
-description: "A one-line introduction."
-summary: "The summary shown in article lists."
+description: A one-line introduction.
+summary: The summary shown in article lists.
 tags: [LLM, Learning Notes]
 draft: false
 math: false
@@ -29,49 +42,36 @@ Start writing here.
 Article content.
 ```
 
-Use a real publication time in the past or present. Future-dated articles are excluded until a later build; publication is not scheduled automatically.
+Set draft: false and commit to main when ready. Actions → Publish blog builds, validates, publishes, and checks both live editions. Set an unfinished translation to draft: true. Use a real publication time in the past or present; future publication is not automatically scheduled.
 
-## Maintain both source versions
+## Links and images
 
-```text
-content/posts/my-article/
-  index.md       # Simplified Chinese
-  index.en.md    # English
-  figure.png     # Shared image
-```
+The English article URL is /posts/my-article/; Chinese uses /zh/posts/my-article/. English internal links use /archives/, /search/, and /tags/. Chinese uses /zh/archives/, /zh/search/, and /zh/tags/.
 
-Both versions use the same slug. Translate the title, description, summary, tags, categories, and body. Each has its own draft flag. Keep unfinished translations as `draft: true`.
-
-Translations are editable Markdown source files. Changing one language does not automatically translate the other; update both files to keep them in sync. No translation API or key is required.
-
-For standalone files, `tset.md` and `tset.en.md` are also a translation pair. File names must match after removing `.en`.
-
-Use `/en/` for English internal links, such as `[Archive](/en/archives/)`. Put images beside both files and reference them with `![Description](figure.png)`.
+Put images beside the two files and use relative links such as ![Description](figure.png). The same image is available to both versions.
 
 ## Create both drafts locally
 
 ```powershell
-python scripts/new_post.py kv-cache-notes --title-zh "KV Cache 学习笔记" --title-en "KV Cache Notes"
+python scripts/new_post.py my-article --title-zh 中文标题 --title-en EnglishTitle
 ```
 
-This creates both files with matching slugs and draft status. Existing directories are never overwritten.
+This creates index.zh.md and index.en.md with matching slugs and draft status. Existing directories are never overwritten. Install the pinned Hugo version with ./scripts/bootstrap.ps1 and run npm run dev for local preview.
 
-For local preview, install the pinned Hugo version with `./scripts/bootstrap.ps1`, then run `npm run dev`. Publish by committing source changes and pushing to main. You may also use `./scripts/publish.ps1` to build and validate before pushing.
+Publish source edits by committing and pushing to main, or use ./scripts/publish.ps1 to build and validate locally before pushing.
 
-## Translate the site interface
+## Site configuration
 
-- `hugo.toml`: language menus, names, descriptions, and home headings.
-- `i18n/zh.toml` and `i18n/en.toml`: controls and messages.
-- `content/about.md` and `content/about.en.md`: about pages.
-- `content/projects.md` and `content/projects.en.md`: project pages.
-- `.github/workflows/publish.yml`: automatic publishing.
+- hugo.toml: default language, translated menus, descriptions, and home headings.
+- i18n/en.toml and i18n/zh.toml: interface controls and messages.
+- content/about.en.md and content/about.zh.md: about pages.
+- content/projects.en.md and content/projects.zh.md: project pages.
+- .github/workflows/publish.yml: automatic publishing.
 
-`README.md` describes the GitHub repository; it is not a blog page. Generated files in `public/` do not need to be committed.
+README.md describes the GitHub repository; it is not a website page. Do not edit generated HTML in public/ or the old docs/ snapshot. Search, archives, tags, and RSS are independent for each language.
 
-## Updates and troubleshooting
+## Updates
 
-Check **Actions → Publish blog** for progress. The footer shows the source revision and includes **Check for updates**. Open pages also check for newer releases. An old cached page may need one hard refresh with Ctrl+Shift+R.
+Check Actions → Publish blog for progress. The footer shows the current revision and provides Check for updates. Open pages also check for newer releases. A page cached before this interface update may need one hard refresh with Ctrl+Shift+R.
 
-Article addresses follow the slug, not necessarily the source filename. `/posts/my-article/` has the English counterpart `/en/posts/my-article/`.
-
-Set `math: true` to enable MathJax for an article. Code highlighting, article contents, and copy controls are available in both editions.
+Set math: true for mathematical expressions. Syntax highlighting, article contents, and code copying are supported in both editions.

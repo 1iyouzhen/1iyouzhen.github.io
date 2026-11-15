@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/archives/"]
 title: Archive
 layout: archives
 slug: archives

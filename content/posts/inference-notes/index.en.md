@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/posts/inference-notes/"]
 title: "LLM Inference Notes: Starting with One Request"
 date: 2026-11-15T08:00:00+08:00
 slug: inference-notes

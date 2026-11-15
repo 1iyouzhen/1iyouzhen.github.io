@@ -1,14 +1,21 @@
 {{- $page := . -}}
-<nav class="language-switcher" aria-label="{{ i18n `languageSwitch` }}">
-{{- range hugo.Sites -}}
-  {{- $target := .Home -}}
-  {{- $language := .Language.Lang -}}
-  {{- if eq $page.Kind "term" -}}
-    {{- with .GetPage (printf "/%s" $page.Section) -}}{{- $target = . -}}{{- end -}}
+<div class="language-switcher" data-language-dropdown>
+  <button type="button" class="language-toggle" id="language-toggle" aria-label="{{ i18n `languageSwitch` }}: {{ site.Language.Label }}" aria-expanded="false" aria-controls="language-options">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a18 18 0 0 1 0 18 18 18 0 0 1 0-18Z"></path></svg>
+    <span>{{ site.Language.Label }}</span>
+    <svg class="language-chevron" aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"></path></svg>
+  </button>
+  <div class="language-options" id="language-options" hidden>
+  {{- range hugo.Sites -}}
+    {{- $target := .Home -}}
+    {{- $language := .Language.Lang -}}
+    {{- if eq $page.Kind "term" -}}
+      {{- with .GetPage (printf "/%s" $page.Section) -}}{{- $target = . -}}{{- end -}}
+    {{- end -}}
+    {{- range $page.AllTranslations -}}
+      {{- if eq .Language.Lang $language -}}{{- $target = . -}}{{- end -}}
+    {{- end -}}
+    <a href="{{ $target.RelPermalink }}" lang="{{ .Language.Locale }}" hreflang="{{ .Language.Locale }}" data-language="{{ $language }}"{{ if eq $page.Language.Lang $language }} class="is-active" aria-current="true"{{ end }}><span>{{ .Language.Label }}</span>{{ if eq $page.Language.Lang $language }}<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>{{ end }}</a>
   {{- end -}}
-  {{- range $page.AllTranslations -}}
-    {{- if eq .Language.Lang $language -}}{{- $target = . -}}{{- end -}}
-  {{- end -}}
-  <a href="{{ $target.RelPermalink }}" lang="{{ .Language.Locale }}" hreflang="{{ .Language.Locale }}" data-language="{{ $language }}"{{ if eq $page.Language.Lang $language }} class="is-active" aria-current="true"{{ end }}>{{ .Language.Label }}</a>
-{{- end -}}
-</nav>
+  </div>
+</div>

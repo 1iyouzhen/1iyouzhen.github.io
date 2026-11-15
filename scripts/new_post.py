@@ -31,9 +31,9 @@ def main():
         return chr(10).join(lines)
 
     bundle.mkdir(parents=True)
-    (bundle / 'index.md').write_text(document(args.title_zh, False), encoding='utf-8')
+    (bundle / 'index.zh.md').write_text(document(args.title_zh, False), encoding='utf-8')
     (bundle / 'index.en.md').write_text(document(args.title_en, True), encoding='utf-8')
-    print('Created: ' + str(bundle / 'index.md'))
+    print('Created: ' + str(bundle / 'index.zh.md'))
     print('Created: ' + str(bundle / 'index.en.md'))
     print('Both versions are drafts. Set draft: false when each version is ready.')
 

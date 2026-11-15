@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/posts/learning-map/"]
 title: "Learning Map: From Language Models to Inference Systems"
 date: 2026-11-15T07:50:00+08:00
 slug: learning-map

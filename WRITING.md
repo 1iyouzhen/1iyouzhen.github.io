@@ -1,128 +1,87 @@
 # 添加文章与自动发布
 
-## 最简单：直接在 GitHub 网页写
+网站默认使用英文。打开 https://1iyouzhen.github.io/ 即进入 English；简体中文版位于 https://1iyouzhen.github.io/zh/ 。
 
-1. 打开仓库 https://github.com/1iyouzhen/1iyouzhen.github.io ，进入 `content/posts`。
-2. 选择 **Add file → Create new file**。文件名填写 `my-first-post/index.md`，每篇文章换一个英文目录名。
-3. 粘贴下方模板，将标题、日期、摘要、标签、正文改成自己的内容。日期请填写当前或过去的时间。
-4. 点击 **Commit changes**，选择直接提交到 **main**。
-5. 在仓库 **Actions → Publish blog** 查看进度。绿色成功后打开 https://1iyouzhen.github.io/ 。
+导航栏的语言按钮显示当前语言。点击后展开 English / 简体中文，选择后进入对应语言的同一篇文章。若该文章尚无已发布译文，切换到目标语言首页。
 
-每次新增、修改或删除文章并提交到 main，GitHub Actions 都会自动构建并发布。无需本地安装 Hugo，也无需手工更新 HTML。修改草稿同样会触发构建，但草稿不会出现在网站上。
+## 在 GitHub 添加文章
 
-## 文章模板
+1. 打开仓库的 content/posts 目录，选择 Add file → Create new file。
+2. 使用下面的双语文件结构；每篇文章使用唯一的英文目录名。
+3. 填写配置和正文，准备发布时设置 draft: false，提交到 main。
+4. 等待 Actions → Publish blog 绿色成功，网站即自动更新。
 
-新建文件路径示例：`content/posts/my-first-post/index.md`。
+```text
+content/posts/my-article/
+  index.en.md    # English，默认站点
+  index.zh.md    # 简体中文
+  figure.png     # 两种语言共享的图片
+```
+
+显式使用 .en.md 和 .zh.md 可避免混淆。没有语言后缀的 index.md 默认归入英文站点。单文件形式也支持，例如 my-article.en.md 与 my-article.zh.md。
+
+两份文章使用相同 slug，分别翻译 title、description、summary、tags、categories 和正文。两种语言独立维护，修改一份不会自动翻译另一份。未完成的译文设 draft: true，只会发布准备好的版本。
+
+## 中文文章模板
+
+保存为 content/posts/my-article/index.zh.md：
 
 ```markdown
 ---
-title: "我的第一篇文章"
+title: 我的文章
 date: 2026-11-15T08:00:00+08:00
-slug: my-first-post
-description: "文章的一句话介绍"
-summary: "这是首页和搜索结果中显示的文章摘要。"
+slug: my-article
+description: 一句话介绍
+summary: 显示在文章列表的摘要
 tags: [LLM, 学习笔记]
 draft: false
 math: false
 ---
 
-这里是文章开头。
+这里开始写正文。
 
 ## 第一个小节
 
-这里写正文，可以使用 **加粗**、列表、链接和代码块。
-
-## 参考资料
-
-- [参考链接](https://example.com/)
+文章内容。
 ```
 
-- `title`：网页上显示的标题，可使用中文。
-- `date`：发表时间。请填真实时间；未来日期默认不发布，也不会在时间到达时定时上线，需要再次提交或手动运行 Actions。
-- `slug`：文章网址的英文短名，全站唯一。例如 `my-first-post` 对应 `/posts/my-first-post/`。
-- `summary`：首页摘要。
-- `tags`：自动生成标签页，无需手工维护。
-- `draft: false`：公开发布；写作中改为 `true`，网站会自动隐藏它。
-- `math: true`：启用数学公式，按需加载 MathJax。
+英文版保存为同目录的 index.en.md，保留相同 slug，翻译标题与正文。日期填写实际发表时间，不要填未来时间；未来日期需要等待后续构建才会发布，并不会到时自动运行。
 
-## 修改或删除文章
+## 链接和图片
 
-在 GitHub 打开文章 `index.md`，点铅笔编辑，再点 **Commit changes**。删除文章目录中的 Markdown 并提交，会自动从站点、归档、标签、搜索和 RSS 中移除该文章。
+- 英文文章：/posts/my-article/；中文文章：/zh/posts/my-article/。
+- 英文站内链接用 /archives/、/search/、/tags/；中文站内链接用 /zh/archives/、/zh/search/、/zh/tags/。
+- 图片放在文章目录里，通过相对路径引用，例如 ![说明](figure.png)。
+- 原英文 /en/ 地址保留跳转到新的英文根路径。
 
-**每次点击提交到 main，都会触发一次自动更新。** 如果提交到其他分支，请将 Pull Request 合并到 main 后再查看网站。
-
-## 加图片
-
-先创建文章，再进入这篇文章的目录，用 **Add file → Upload files** 上传图片，例如 `figure.png`。文章里写：
-
-```markdown
-![图片说明](figure.png)
-```
-
-图片与文章放在同一个目录；注意文件名大小写。
-
-## 本地写作（可选）
-
-本地项目：`C:/Users/l1337/youzhen-blog`。本地预览需要 Hugo Extended 0.170.0，Windows 可运行 `./scripts/bootstrap.ps1` 安装。
+## 本地生成双语草稿
 
 ```powershell
-# 先同步网页上的更新
-git pull --ff-only
-# 预览，包括草稿
-.\.tools\hugo.exe server -D
+python scripts/new_post.py my-article --title-zh 中文标题 --title-en EnglishTitle
 ```
 
-完成后，只需提交 Markdown：
+会创建 index.zh.md 和 index.en.md，默认都是草稿，不会覆盖已有目录。
 
-```powershell
-git add content
-git commit -m "docs: add new article"
-git push origin main
-```
+Windows 可运行 ./scripts/bootstrap.ps1 安装固定版 Hugo，然后 npm run dev 预览。也可以运行 ./scripts/publish.ps1，在本地构建、检查后提交源文件；推送 main 后仍由 GitHub Actions 自动发布。
 
-也可运行 `./scripts/publish.ps1`，会先在本地构建、校验并提交源文件；推送后由 GitHub 自动部署。
+## 修改和删除
 
-## 发布进度与失败排查
+在 GitHub 编辑对应语言的 Markdown 并提交即可。删除某语言文件后会从该语言的页面、搜索、标签和 RSS 中移除。两种语言的搜索、归档、标签和 RSS 分别生成。
 
-进入仓库 **Actions → Publish blog** 查看最近一次运行。绿色表示成功；红色表示失败，点进去查看具体步骤。失败时已上线的网站保持上次成功版本。
+README.md 是仓库介绍，不会直接变成网站内容。不要手动编辑 public/ 或旧 docs/ 里的生成文件。
 
-常见原因：Markdown 开头少了 `---`、标题中的冒号没有加引号、图片文件名错误、两个文章使用相同 slug，或手工修改后产生无效链接。修复并重新提交即可。
+## 站点配置
 
-构建会自动检查必要页面、内部链接、RSS、搜索索引和草稿隔离。`public/` 是临时生成目录，不提交到仓库。GitHub Pages 的 Source 使用 **GitHub Actions**。不需要提交 `docs/` 或生成 HTML。
+- hugo.toml：默认语言、两种语言的菜单、首页和描述。
+- i18n/en.toml 与 i18n/zh.toml：界面提示和按钮翻译。
+- content/about.en.md 与 content/about.zh.md：关于页。
+- content/projects.en.md 与 content/projects.zh.md：项目页。
+- assets/css/extended/custom.css：个性化样式。
+- .github/workflows/publish.yml：自动发布。
+- WRITING.en.md：英文写作说明。
 
-## 配置与样式
+公式文章设 math: true，即按需加载 MathJax。代码块可声明语言，目录与复制按钮两种语言均可使用。
 
-- `hugo.toml`：站点名称、导航、社交链接、简介。
-- `content/about.md`：关于页面。
-- `content/projects.md`：项目页面。
-- `assets/css/extended/custom.css`：个性化样式。
-- `.github/workflows/publish.yml`：自动构建与发布。
-- `versions.json`：固定的 Hugo 与主题版本。
+## 更新检查
 
-主题来自 MIT 许可的 PaperMod，保留原始 LICENSE。文章版权归各自作者所有。
-
-
-## 已提交，但网页看起来没变化？
-
-1. 先看 Actions → Publish blog 是否绿色成功；现在部署后还会检查线上页面的提交版本。
-2. 查看网站页脚的版本号，并与 GitHub 最新提交前七位比较。点页脚“检查更新”可以重新加载最新页面。已经打开的页面也会定期检查新版本。
-3. 首次安装更新检测以前缓存的旧页面，需要按一次 Ctrl+Shift+R 强制刷新；之后页面会自动检测后续版本。
-4. 仓库 README.md 是 GitHub 仓库介绍，不会直接显示在博客正文中。博客文章请修改 content/posts/ 下的 Markdown，网站名称请修改 hugo.toml 中的 title 和 params.label.text。
-5. 文章网址由 slug 决定。例如文件 content/posts/tset.md 中写了 slug: my-first-post，网址就是 /posts/my-first-post/。
-6. 首页按发表日期排序，新建文件不一定排在最上面。需要排在前面的文章，请填写正确的完整日期和时区；不要填写未来时间。
-
-GitHub Pages 的缓存响应可能短暂保留旧版本。本站已增加版本检测、手动更新入口以及搜索索引重新获取，部署仍需要等待 Actions 成功。
-
-## 中英文切换与双语源码
-
-网站导航旁可选择简体中文或 English。中文保留根网址，英文使用 /en/。切换文章会跳转到对应译文；没有已发布译文时进入目标语言首页。
-
-每篇文章可以在同一目录放置 index.md（中文）和 index.en.md（英文）。两个文件保持相同 slug，分别翻译 title、description、summary、tags、categories 和正文；各自用 draft 控制公开。
-
-单文件文章也支持，例如 tset.md 对应 tset.en.md。去掉 .en 后文件名应相同。图片放同一目录，用相对路径共享。英文站内链接使用 /en/ 前缀，例如 /en/archives/。
-
-两份文件是独立维护的源码，修改中文不会自动翻译英文。要同步文章内容，请一起修改两个文件；未完成的译文保留 draft: true。提交到 main 后两种语言一起自动构建，搜索、RSS、标签与归档按语言分别生成。
-
-本地可一次生成双语草稿：python scripts/new_post.py kv-cache-notes --title-zh 中文标题 --title-en EnglishTitle。命令不会覆盖已有目录，生成后分别填写内容再发布。
-
-界面翻译放在 i18n/zh.toml 和 i18n/en.toml；菜单和首页语言配置在 hugo.toml 的 languages.zh / languages.en。英文写作说明见 WRITING.en.md。
+Actions → Publish blog 绿色成功后，可在页脚查看提交版本或点击检查更新。已打开页面会定期检测新版本。若浏览器仍停留在本次界面改版前的缓存，按 Ctrl+Shift+R 强制刷新一次。

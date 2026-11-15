@@ -1,4 +1,5 @@
 ---
+aliases: ["/en/search/"]
 title: Search
 layout: search
 slug: search

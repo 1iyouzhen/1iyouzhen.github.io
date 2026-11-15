@@ -10,12 +10,12 @@ draft: true
 math: false
 ---
 
-## 问题
+## Problem
 
-## 核心思路
+## Core idea
 
-## 细节与验证
+## Details and verification
 
-## 参考资料
+## References
 
-<!-- 英文版：在同一目录创建 index.en.md，使用相同 slug，翻译 title、summary、tags 和正文。 -->
+<!-- English is the default. Use index.en.md for English and index.zh.md for Simplified Chinese, with matching slugs. -->
