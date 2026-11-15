@@ -1,0 +1,11 @@
+{
+  "name": "youzhen-notes",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Youzhen Li's personal blog",
+  "scripts": {
+    "build": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1",
+    "check": "python scripts/check_site.py",
+    "dev": ".tools/hugo.exe server -D"
+  }
+}

@@ -1,0 +1,69 @@
+:root {
+  --theme: #f8f9fc; --entry: #fff; --primary: #212d43;
+  --secondary: #626d80; --tertiary: #e2e7f0; --content: #344058;
+  --border: #dce2ec; --accent: #3156a4; --code-bg: #edf0f7;
+  --main-width: 780px; --nav-width: 1120px; --radius: 10px;
+}
+.dark, :root[data-theme='dark'] {
+  --theme: #171c26; --entry: #202735; --primary: #e2e8f3;
+  --secondary: #a4afc1; --tertiary: #313c50; --content: #cbd4e3;
+  --border: #344056; --accent: #98b6f6; --code-bg: #252e3d;
+}
+body {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; letter-spacing: .012em;}
+.header-nav {min-height: 84px; align-items: center;}
+.logo a {font-family: Georgia, 'Times New Roman', serif; font-weight: 700; letter-spacing: -.8px; font-size: 25px;}
+#menu {gap: 24px;}
+#menu li + li {margin-inline-start: 0;}
+#menu a {font-size: 14px;}
+#menu .active {color: var(--accent); border-bottom-color: var(--accent);}
+.main {padding-top: 12px;}
+.home-info {min-height: auto; padding: 46px 0 38px; margin: 0 0 38px; border-bottom: 1px solid var(--border);}
+.home-eyebrow {font-family: 'SFMono-Regular', Consolas, monospace; font-size: 10px; letter-spacing: .13em; font-weight: 600; color: var(--secondary); margin-bottom: 21px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;}
+.home-eyebrow span {color: var(--accent);}
+.home-info .entry-header h1 {font-family: Georgia, 'Songti SC', SimSun, serif; font-size: clamp(26px, 4.5vw, 38px); line-height: 1.55; letter-spacing: -.5px; font-weight: 700;}
+.home-info .entry-content {margin: 18px 0 21px; -webkit-line-clamp: unset; display: block; overflow: visible;}
+.home-topics {font-size: 14px; color: var(--accent); margin-bottom: 16px; letter-spacing: .045em;}
+.home-description {font-size: 15px; line-height: 1.95; color: var(--secondary);}
+.home-links {display: flex; align-items: center; justify-content: space-between; gap: 20px;}
+.social-icons {display: flex; gap: 18px; padding: 0;}
+.social-icons a {padding: 0; display: flex; align-items: center; min-height: 44px;}
+.social-icons a svg {width: 21px; height: 21px;}
+.home-about {font-size: 13px; color: var(--secondary); display: flex; gap: 9px; align-items: center;}
+.home-about:hover {color: var(--accent);}
+.post-entry {padding: 27px 30px 24px; margin-bottom: 22px; border: 1px solid var(--border); transition: border-color .18s ease, transform .18s ease;}
+.post-entry:hover {border-color: var(--accent); transform: translateY(-2px);}
+.entry-header h2 {font-size: 23px; line-height: 1.5; letter-spacing: -.3px;}
+.entry-content {font-size: 15px; line-height: 1.85; margin: 13px 0; -webkit-line-clamp: 3;}
+.entry-footer {font-size: 12px; color: var(--secondary);}
+.post-header {margin-top: 30px;}
+.post-title {font-family: Georgia, 'Songti SC', SimSun, serif; font-size: clamp(29px, 5vw, 40px); line-height: 1.5;}
+.post-description {font-size: 16px; line-height: 1.8; color: var(--secondary);}
+.post-content {font-size: 17px; line-height: 1.95;}
+.post-content h2 {font-size: 26px; margin-top: 42px; padding-top: 8px;}
+.post-content h3 {font-size: 21px;}
+.post-content a {color: var(--accent); box-shadow: 0 1px 0 var(--accent);}
+.post-content code {font-family: 'SFMono-Regular', Consolas, monospace; font-size: .85em;}
+.post-content pre {border: 1px solid var(--border);}
+.post-content blockquote {border-inline-start: 3px solid var(--accent); color: var(--secondary);}
+.post-content table {font-size: 15px; line-height: 1.7;}
+.post-content th {background: var(--code-bg);}
+.toc {background: var(--entry); border: 1px solid var(--border); padding: 18px 22px;}
+.toc a {font-size: 14px; line-height: 1.9;}
+.terms-tags a {border: 1px solid var(--border); background: var(--entry);}
+.footer {margin-top: 48px; padding-top: 25px; border-top: 1px solid var(--border); line-height: 1.9;}
+:focus-visible {outline: 3px solid var(--accent); outline-offset: 5px; border-radius: 3px;}
+@media (min-width: 1000px) {.main {padding-top: 28px;}}
+@media (max-width: 700px) {
+  .header-nav {min-height: 98px; padding: 10px 0 0; justify-content: center; flex-direction: column;}
+  .logo {margin: 0; line-height: 44px;}
+  #menu {margin: 0; gap: 22px; max-width: 100%; min-height: 44px; line-height: 44px;}
+  #menu a {font-size: 13px;}
+  .home-info {padding-top: 30px; margin-bottom: 26px;}
+  .home-eyebrow {font-size: 9px; letter-spacing: .06em; gap: 8px;}
+  .post-entry {padding: 22px;}
+  .entry-header h2 {font-size: 21px;}
+  .post-content {font-size: 16px;}
+}
+@media (prefers-reduced-motion: reduce) {* {scroll-behavior: auto !important; transition: none !important;}}
+
+.home-info .entry-header h1 {text-wrap: balance;}
