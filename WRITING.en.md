@@ -12,12 +12,14 @@ Open content/posts in the repository, select Add file → Create new file, and u
 content/posts/my-article/
   index.en.md    # English, the default edition
   index.zh.md    # Simplified Chinese
-  figure.png     # Shared image
+  images/        # Images for this article, shared by both languages
+    architecture.png
+    result.jpg
 ```
 
 Keep the same slug in both versions. Translate the title, description, summary, tags, categories, and body. Each language has an independent draft flag. Translations are maintained as source Markdown; editing one version does not automatically translate the other.
 
-Explicit .en.md and .zh.md suffixes are recommended. A file without a language suffix, such as index.md, belongs to the default English edition. Standalone files such as my-article.en.md and my-article.zh.md also work.
+Keep every article in its own folder with index.en.md, index.zh.md, and an images/ subdirectory. Explicit language suffixes are recommended. A file without a language suffix, such as index.md, belongs to the default English edition.
 
 ## Article template
 
@@ -48,7 +50,32 @@ Set draft: false and commit to main when ready. Actions → Publish blog builds,
 
 The English article URL is /posts/my-article/; Chinese uses /zh/posts/my-article/. English internal links use /archives/, /search/, and /tags/. Chinese uses /zh/archives/, /zh/search/, and /zh/tags/.
 
-Put images beside the two files and use relative links such as ![Description](figure.png). The same image is available to both versions.
+Keep all article images inside that article’s images/ folder. Use a relative path such as ![System architecture](images/architecture.png). Both translations share the image file; translate the description separately.
+
+
+### Upload article images on GitHub
+
+1. Open content/posts/my-article/images/ and choose Add file → Upload files.
+2. Upload this article’s images and commit to main.
+3. Reference the image in the article body:
+
+```markdown
+![System architecture](images/architecture.png)
+```
+
+Use the same path in both language files. Choose simple filenames and match their exact capitalization. Do not use local disk paths or upload authoring images into public/.
+
+### Article cover
+
+Add this to the article’s YAML front matter between the two --- delimiters:
+
+```yaml
+cover:
+  image: images/architecture.png
+  alt: System architecture
+```
+
+Keep the image path identical in both languages and translate alt. Commit the changes to publish the body images and cover automatically. Different articles can use identical image filenames without collisions because their folders are separate.
 
 ## Create both drafts locally
 
@@ -56,7 +83,7 @@ Put images beside the two files and use relative links such as ![Description](fi
 python scripts/new_post.py my-article --title-zh 中文标题 --title-en EnglishTitle
 ```
 
-This creates index.zh.md and index.en.md with matching slugs and draft status. Existing directories are never overwritten. Install the pinned Hugo version with ./scripts/bootstrap.ps1 and run npm run dev for local preview.
+This creates an article folder containing index.zh.md, index.en.md, and images/, with matching slugs and draft status. images/.gitkeep keeps an otherwise empty image directory visible on GitHub. Existing directories are never overwritten. Install the pinned Hugo version with ./scripts/bootstrap.ps1 and run npm run dev for local preview.
 
 Publish source edits by committing and pushing to main, or use ./scripts/publish.ps1 to build and validate locally before pushing.
 

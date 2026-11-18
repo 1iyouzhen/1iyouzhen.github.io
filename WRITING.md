@@ -15,10 +15,12 @@
 content/posts/my-article/
   index.en.md    # English，默认站点
   index.zh.md    # 简体中文
-  figure.png     # 两种语言共享的图片
+  images/        # 这篇文章的图片，中英文共用
+    architecture.png
+    result.jpg
 ```
 
-显式使用 .en.md 和 .zh.md 可避免混淆。没有语言后缀的 index.md 默认归入英文站点。单文件形式也支持，例如 my-article.en.md 与 my-article.zh.md。
+每篇文章统一使用一个独立文件夹；文件夹内放 index.en.md、index.zh.md，配图全部放入该文件夹的 images/。显式语言后缀可避免混淆，没有语言后缀的 index.md 默认归入英文站点。
 
 两份文章使用相同 slug，分别翻译 title、description、summary、tags、categories 和正文。两种语言独立维护，修改一份不会自动翻译另一份。未完成的译文设 draft: true，只会发布准备好的版本。
 
@@ -51,8 +53,39 @@ math: false
 
 - 英文文章：/posts/my-article/；中文文章：/zh/posts/my-article/。
 - 英文站内链接用 /archives/、/search/、/tags/；中文站内链接用 /zh/archives/、/zh/search/、/zh/tags/。
-- 图片放在文章目录里，通过相对路径引用，例如 ![说明](figure.png)。
+- 图片放在这篇文章的 images/ 子目录，通过相对路径引用，例如 ![说明](images/architecture.png)。英文版引用同一图片，只需翻译说明文字。
 - 原英文 /en/ 地址保留跳转到新的英文根路径。
+
+
+### 在 GitHub 为文章上传图片
+
+1. 进入 content/posts/文章英文名/images/，点击 Add file → Upload files。
+2. 上传这篇文章的图片并提交到 main，例如 architecture.png。
+3. 打开上一层的 index.zh.md，在需要显示图片的地方添加：
+
+```markdown
+![系统架构示意图](images/architecture.png)
+```
+
+英文文件 index.en.md 引用同一张图：
+
+```markdown
+![System architecture](images/architecture.png)
+```
+
+图片名建议使用英文、数字和连字符，引用时大小写必须与文件名一致。不要把 images/ 上传到 public/，也不要在 Markdown 中写本机磁盘路径。
+
+### 文章封面
+
+在文章顶部的两个 --- 之间加入：
+
+```yaml
+cover:
+  image: images/architecture.png
+  alt: 系统架构示意图
+```
+
+英文版使用相同 image 路径并翻译 alt 即可。保存并提交后，正文图片与封面都随网站自动发布。相同文件名可以出现在不同文章的 images/ 中，彼此不会覆盖。
 
 ## 本地生成双语草稿
 
@@ -60,7 +93,7 @@ math: false
 python scripts/new_post.py my-article --title-zh 中文标题 --title-en EnglishTitle
 ```
 
-会创建 index.zh.md 和 index.en.md，默认都是草稿，不会覆盖已有目录。
+会创建文章独立文件夹，其中包含 index.zh.md、index.en.md 和 images/。两种语言默认都是草稿，不会覆盖已有目录。images/.gitkeep 用于让 GitHub 保留空图片目录，上传图片时不用删除它。
 
 Windows 可运行 ./scripts/bootstrap.ps1 安装固定版 Hugo，然后 npm run dev 预览。也可以运行 ./scripts/publish.ps1，在本地构建、检查后提交源文件；推送 main 后仍由 GitHub Actions 自动发布。
 

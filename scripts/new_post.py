@@ -1,4 +1,4 @@
-"""Create paired Chinese and English Hugo article drafts."""
+"""Create an article folder with bilingual Markdown drafts and an images directory."""
 import argparse
 from datetime import datetime, timedelta, timezone
 import json
@@ -28,13 +28,18 @@ def main():
         headings = ['Problem', 'Core idea', 'Details and verification', 'References'] if english else ['问题', '核心思路', '细节与验证', '参考资料']
         for heading in headings:
             lines.extend(['## ' + heading, '', ''])
+        image_note = '<!-- Add images to images/. Example: ![Image description](images/architecture.png) -->' if english else '<!-- 配图放在 images/。引用示例：![图片说明](images/architecture.png) -->'
+        lines.extend([image_note, ''])
         return chr(10).join(lines)
 
     bundle.mkdir(parents=True)
+    (bundle / 'images').mkdir()
+    (bundle / 'images' / '.gitkeep').touch()
     (bundle / 'index.zh.md').write_text(document(args.title_zh, False), encoding='utf-8')
     (bundle / 'index.en.md').write_text(document(args.title_en, True), encoding='utf-8')
     print('Created: ' + str(bundle / 'index.zh.md'))
     print('Created: ' + str(bundle / 'index.en.md'))
+    print('Images: ' + str(bundle / 'images'))
     print('Both versions are drafts. Set draft: false when each version is ready.')
 
 
