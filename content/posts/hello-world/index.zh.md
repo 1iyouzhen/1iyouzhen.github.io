@@ -8,7 +8,6 @@ tags: [博客, 学习笔记]
 categories: [站点日志]
 draft: false
 ---
-这里是 **Youzhen’s Notes**，Youzhen Li 的个人博客。
 
 这个站点围绕 LLMs 与 AI Infrastructure 展开，用来保存值得反复思考的问题，以及从阅读、推导到实现的过程。
 
@@ -33,6 +32,5 @@ draft: false
 - 在[归档](/zh/archives/)中按时间查找文章。
 - 在[标签](/zh/tags/)中按主题浏览。
 - 使用[搜索](/zh/search/)查找标题和正文中的关键词。
-- 通过 [RSS](/zh/index.xml) 订阅更新。
 
 博客源码公开在 [GitHub](https://github.com/1iyouzhen/1iyouzhen.github.io)，欢迎交流与勘误。
