@@ -1,14 +1,9 @@
-{{- with site.Params.homeInfoParams }}
-<article class="first-entry home-info">
+<section class="home-info" aria-label="{{ site.Title }}">
+  <h1 class="home-title-sr">{{ site.Title }}</h1>
   <p class="home-eyebrow">YOUZHEN LI <span aria-hidden="true">/</span> {{ i18n "homeEyebrow" }}</p>
-  <header class="entry-header"><h1>{{ .Title | markdownify }}</h1></header>
-  <section class="entry-content">
-    <p class="home-topics">{{ .Content | markdownify }}</p>
-    <p class="home-description">{{ i18n "homeDescriptionOne" }}<br>{{ i18n "homeDescriptionTwo" }}</p>
-  </section>
-  <footer class="entry-footer home-links">
+  <p class="home-description">{{ i18n "homeDescriptionOne" }}<br>{{ i18n "homeDescriptionTwo" }}</p>
+  <div class="home-links">
     {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
-    <a class="home-about" href="{{ `about/` | relLangURL }}">{{ i18n "aboutBlog" }} <span aria-hidden="true">→</span></a>
-  </footer>
-</article>
-{{- end }}
+    <a class="home-about" href="{{ "about/" | relLangURL }}">{{ i18n "aboutBlog" }} <span aria-hidden="true">→</span></a>
+  </div>
+</section>

@@ -59,8 +59,7 @@ msapplication_TileColor = '#3156a4'
 text = "Notes"
 
 [params.homeInfoParams]
-Title = '把问题想清楚，把过程记下来。'
-Content = 'LLMs · AI Infrastructure · Learning in public'
+enabled = true
 
 [[params.socialIcons]]
 name = 'github'
@@ -117,9 +116,6 @@ hasCJKLanguage = true
 description = 'Youzhen Li 的个人博客，记录 LLMs 与 AI Infrastructure 的学习笔记、论文阅读和工程实践。'
 [languages.zh.params.editPost]
 Text = '在 GitHub 上编辑'
-[languages.zh.params.homeInfoParams]
-Title = '把问题想清楚，把过程记下来。'
-Content = 'LLMs · AI Infrastructure · 公开学习笔记'
 [[languages.zh.menu.main]]
 name = '文章'
 pageRef = '/'
@@ -155,9 +151,6 @@ description = 'Youzhen Li’s notes on LLMs and AI infrastructure: reading, lear
 keywords = ['Youzhen Li', 'LLM', 'AI Infrastructure', 'Machine Learning', 'Learning Notes']
 [languages.en.params.editPost]
 Text = 'Edit on GitHub'
-[languages.en.params.homeInfoParams]
-Title = 'Think it through. Write it down.'
-Content = 'LLMs · AI Infrastructure · Learning in public'
 [[languages.en.menu.main]]
 name = 'Posts'
 pageRef = '/'
