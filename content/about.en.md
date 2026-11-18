@@ -7,7 +7,6 @@ ShowToc: false
 ShowReadingTime: false
 ShowWordCount: false
 ---
-Hello, I’m **Youzhen Li**, [@1iyouzhen](https://github.com/1iyouzhen) on GitHub.
 
 I’m interested in **LLMs and AI infrastructure**. This blog collects my learning notes, paper reading, and engineering practice.
 
