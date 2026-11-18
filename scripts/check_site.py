@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 SOURCE = Path(__file__).resolve().parent.parent
 ROOT = (SOURCE / (sys.argv[1] if len(sys.argv) > 1 else 'public')).resolve()
 BASE = '1iyouzhen.github.io'
-REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll', 'deployment.json', 'content-manifest.json']
+REQUIRED = ['index.html', 'about/index.html', 'projects/index.html', 'faq/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', 'index.json', 'sitemap.xml', 'robots.txt', 'favicon.svg', '.nojekyll', 'deployment.json', 'content-manifest.json']
 
 class Page(HTMLParser):
     def __init__(self):
@@ -57,7 +57,7 @@ for path, page in cache.items():
 indexes = {prefix: json.loads((ROOT / prefix / 'index.json').read_text(encoding='utf-8')) for prefix in ('', 'zh')}
 index = [entry for entries in indexes.values() for entry in entries]
 for prefix in ('', 'zh'):
-    for route in ('index.html', 'about/index.html', 'projects/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', '404.html'):
+    for route in ('index.html', 'about/index.html', 'projects/index.html', 'faq/index.html', 'archives/index.html', 'search/index.html', 'tags/index.html', 'index.xml', '404.html'):
         if not (ROOT / prefix / route).is_file(): errors.append('Missing bilingual route: ' + prefix + '/' + route)
     for entry in indexes[prefix]:
         path = urlsplit(entry['permalink']).path
