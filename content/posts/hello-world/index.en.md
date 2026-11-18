@@ -1,6 +1,6 @@
 ---
 aliases: ["/en/posts/hello-world/"]
-title: "Getting Started: Youzhen’s Notes"
+title: "Getting Started"
 date: 2026-11-15T08:00:00+08:00
 slug: hello-world
 description: A personal blog about LLMs and AI infrastructure starts here.
@@ -9,7 +9,6 @@ tags: [Blog, Learning Notes]
 categories: [Site Updates]
 draft: false
 ---
-Welcome to **Youzhen’s Notes**, the personal blog of Youzhen Li.
 
 This site focuses on LLMs and AI infrastructure. It keeps track of questions worth revisiting, along with the process of reading, deriving, and implementing.
 
@@ -34,6 +33,5 @@ Future technical notes will aim to answer a few concrete questions:
 - Browse articles by date in the [archive](/archives/).
 - Explore topics through [tags](/tags/).
 - Use [search](/search/) to find keywords in titles and content.
-- Subscribe through [RSS](/index.xml).
 
 The source is available on [GitHub](https://github.com/1iyouzhen/1iyouzhen.github.io). Feedback and corrections are welcome.
