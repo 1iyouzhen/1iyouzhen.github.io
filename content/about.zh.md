@@ -6,9 +6,8 @@ ShowToc: false
 ShowReadingTime: false
 ShowWordCount: false
 ---
-你好，我是 **Youzhen Li**，GitHub 上的 [@1iyouzhen](https://github.com/1iyouzhen)。
 
-我的兴趣是 **LLMs 与 AI Infrastructure**。这个博客用来整理相关的学习笔记、论文阅读和工程实践。
+我感兴趣的方向是 **LLMs 与 AI Infrastructure**，这里用来整理相关的学习笔记、论文阅读和工程实践。
 
 ## 这里会记录什么
 
