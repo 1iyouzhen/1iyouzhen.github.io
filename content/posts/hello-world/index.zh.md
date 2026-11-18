@@ -1,5 +1,5 @@
 ---
-title: 开始记录：Youzhen’s Notes
+title: 开始记录
 date: 2026-11-15T08:00:00+08:00
 slug: hello-world
 description: 一个关于 LLMs 与 AI Infrastructure 的个人博客，从这里开始。
